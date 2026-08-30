@@ -56,7 +56,43 @@ document.addEventListener('DOMContentLoaded', () => {
                     submitBtn.disabled = false;
                 }
             }
+        
         });
+document.addEventListener('DOMContentLoaded', () => {
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', handleContact);
+    }
+});
+
+async function handleContact(e) {
+    e.preventDefault();
+    const data = {
+        name: document.getElementById('contactName').value,
+        email: document.getElementById('contactEmail').value,
+        message: document.getElementById('contactMsg').value
+    };
+
+    try {
+        const response = await fetch('http://localhost:5001/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+        if (result.success) {
+            alert('Thank you! Your message has been saved in the database.');
+            document.getElementById('contactForm').reset();
+        } else {
+            alert('Failed to send message. Please try again.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Could not connect to the server.');
+    }
+}
+
     }
 });
 
