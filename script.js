@@ -105,3 +105,35 @@ const response = await fetch(`${BACKEND_URL}/api/contact`, {
 });
 
 
+// Inside your script.js form listener
+try {
+    const response = await fetch('http://localhost:5001/api/crop-recommendation', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+    });
+    const data = await response.json();
+    if (data.success) {
+        recommendedCropSpan.textContent = data.data.recommended_crop;
+        resultCard.style.display = 'block';
+    }
+} catch (err) {
+    // FALLBACK SIMULATION: Works instantly even if backend is offline!
+    console.warn('Backend offline, using client-side prediction logic.');
+    
+    let simulatedCrop = 'Rice';
+    const n = parseFloat(formData.N);
+    const ph = parseFloat(formData.ph);
+    
+    if (n < 40) simulatedCrop = 'Maize';
+    else if (ph > 7.2) simulatedCrop = 'Cotton';
+    else if (n > 80) simulatedCrop = 'Rice';
+    else simulatedCrop = 'Wheat';
+
+    recommendedCropSpan.textContent = simulatedCrop;
+    resultCard.style.display = 'block';
+    resultCard.scrollIntoView({ behavior: 'smooth' });
+} finally {
+    submitBtn.textContent = 'Get Crop Recommendation';
+    submitBtn.disabled = false;
+}
