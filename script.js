@@ -95,4 +95,13 @@ async function handleContact(e) {
 
     }
 });
+// Replace 'http://localhost:5001' with your live backend URL
+const BACKEND_URL = 'https://your-backend-url.onrender.com';
+
+const response = await fetch(`${BACKEND_URL}/api/contact`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+});
+
 
