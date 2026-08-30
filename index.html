@@ -58,6 +58,80 @@
             <p>Get localized real-time weather analytics tailored for optimal farming schedules.</p>
         </div>
     </section>
+<!-- Floating AI Chatbot Widget -->
+<div id="agroChatWidget" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    
+    <!-- Chat Toggle Button -->
+    <button id="chatToggleBtn" onclick="toggleChat()" style="background: #1b5e20; color: white; border: none; border-radius: 50px; padding: 12px 20px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 8px;">
+        💬 AgroAI Chat
+    </button>
+
+    <!-- Chat Box Window (Hidden by default) -->
+    <div id="chatWindow" style="display: none; width: 320px; height: 420px; background: white; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.15); flex-direction: column; overflow: hidden; border: 1px solid #ddd; margin-bottom: 10px;">
+        
+        <!-- Chat Header -->
+        <div style="background: #1b5e20; color: white; padding: 12px; display: flex; justify-content: space-between; align-items: center; font-weight: bold;">
+            <span>🌿 AgroSense Assistant</span>
+            <button onclick="toggleChat()" style="background: none; border: none; color: white; font-size: 1.2rem; cursor: pointer;">&times;</button>
+        </div>
+
+        <!-- Chat Messages Area -->
+        <div id="chatMessages" style="flex: 1; padding: 12px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; background: #f9f9f9; font-size: 0.9rem;">
+            <div style="background: #e8f5e9; padding: 8px 12px; border-radius: 8px; max-width: 80%; align-self: flex-start; color: #2e7d32;">
+                Hello! I am your AgroSense AI assistant. Ask me anything about crop care, soil health, or farming tips!
+            </div>
+        </div>
+
+        <!-- Chat Input Form -->
+        <form id="chatForm" onsubmit="handleChatSubmit(event)" style="display: flex; border-top: 1px solid #ddd; background: white;">
+            <input type="text" id="chatInput" placeholder="Type your farming question..." style="flex: 1; padding: 10px; border: none; outline: none; font-size: 0.9rem;" required>
+            <button type="submit" style="background: #2e7d32; color: white; border: none; padding: 0 15px; font-weight: bold; cursor: pointer;">Send</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Toggle Chat Window Visibility
+    function toggleChat() {
+        const chatWindow = document.getElementById('chatWindow');
+        const toggleBtn = document.getElementById('chatToggleBtn');
+        if (chatWindow.style.display === 'none' || chatWindow.style.display === '') {
+            chatWindow.style.display = 'flex';
+            toggleBtn.style.display = 'none';
+        } else {
+            chatWindow.style.display = 'none';
+            toggleBtn.style.display = 'flex';
+        }
+    }
+
+    // Handle Sending Messages
+    async function handleChatSubmit(e) {
+        e.preventDefault();
+        const inputField = document.getElementById('chatInput');
+        const messagesArea = document.getElementById('chatMessages');
+        const userText = inputField.value.trim();
+        if (!userText) return;
+
+        // Append User Message
+        messagesArea.innerHTML += `<div style="background: #1b5e20; color: white; padding: 8px 12px; border-radius: 8px; max-width: 80%; align-self: flex-end;">${userText}</div>`;
+        inputField.value = '';
+        messagesArea.scrollTop = messagesArea.scrollHeight;
+
+        // Simulate AI Response (or connect your backend OpenAI/LLM endpoint here)
+        setTimeout(() => {
+            let botReply = "That's a great farming question! Make sure to monitor soil moisture and maintain proper nitrogen levels for optimal growth.";
+            
+            if (userText.toLowerCase().includes('disease')) {
+                botReply = "For plant diseases, ensure good airflow between crops, remove infected leaves promptly, and apply organic or copper-based fungicides if necessary.";
+            } else if (userText.toLowerCase().includes('weather') || userText.toLowerCase().includes('rain')) {
+                botReply = "Keep an eye on local precipitation forecasts. Avoid heavy irrigation if rainfall is expected within 24 hours.";
+            }
+
+            messagesArea.innerHTML += `<div style="background: #e8f5e9; padding: 8px 12px; border-radius: 8px; max-width: 80%; align-self: flex-start; color: #2e7d32;">${botReply}</div>`;
+            messagesArea.scrollTop = messagesArea.scrollHeight;
+        }, 1000);
+    }
+</script>
 
     <footer>
         <p>&copy; 2026 AgroSense. Empowering modern agriculture.</p>
