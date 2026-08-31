@@ -38,6 +38,56 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.04);
         }
         .step-card h4 { color: #1b5e20; margin-bottom: 10px; font-size: 1.2rem; }
+
+        /* Footer Multi-Column Layout Styles */
+        .site-footer {
+            background: #1a2e1b;
+            color: #ffffff;
+            padding: 50px 5% 30px 5%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            max-width: 1100px;
+            margin: 0 auto 40px auto;
+        }
+        .footer-col h3 {
+            color: #a5d6a7;
+            font-size: 1.2rem;
+            margin-bottom: 18px;
+            border-bottom: 2px solid #2e7d32;
+            padding-bottom: 8px;
+        }
+        .footer-col ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+        .footer-col ul li a {
+            color: #d0d0d0;
+            text-decoration: none;
+            transition: color 0.2s;
+            font-size: 0.95rem;
+        }
+        .footer-col ul li a:hover {
+            color: #a5d6a7;
+            padding-left: 5px;
+        }
+        .footer-bottom {
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+        .footer-bottom span {
+            color: #ff8a80;
+        }
     </style>
 </head>
 <body>
@@ -53,7 +103,7 @@
         </nav>
     </header>
 
-    <!-- Hero Section (Cleaned up, no duplicate buttons) -->
+    <!-- Hero Section -->
     <section class="hero" style="padding-bottom: 50px;">
         <h1>Grow Smarter, Harvest Better</h1>
         <p>Your digital farming partner. Get instant crop recommendations based on your soil, detect leaf diseases early, and check weather alerts to protect your yield.</p>
@@ -79,7 +129,7 @@
         </div>
     </section>
 
-    <!-- Core Features Grid with Unique Links -->
+    <!-- Core Features Grid -->
     <section class="features" style="background: #f4f9f4; padding-top: 50px;">
         <h2 style="text-align: center; color: #1b5e20; margin-bottom: 10px; font-size: 2rem;">How AgroSense Helps You in the Field</h2>
         <p style="text-align: center; color: #666; margin-bottom: 30px;">Simple tools designed to make farming decisions easier and more profitable.</p>
@@ -124,8 +174,53 @@
         </div>
     </section>
 
-    <footer>
-        <p>&copy; 2026 AgroSense. Empowering farmers with smart technology.</p>
+    <!-- Professional Footer matching screenshots -->
+    <footer class="site-footer">
+        <div class="footer-grid">
+            <!-- Quick Links -->
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">&rsaquo; Home</a></li>
+                    <li><a href="index.html#features">&rsaquo; Features</a></li>
+                    <li><a href="about.html">&rsaquo; About</a></li>
+                </ul>
+            </div>
+
+            <!-- Extra Links -->
+            <div class="footer-col">
+                <h3>Extra Links</h3>
+                <ul>
+                    <li><a href="#" onclick="toggleChat(); return false;">&rsaquo; Ask Questions</a></li>
+                    <li><a href="#">&rsaquo; Terms Of Use</a></li>
+                    <li><a href="#">&rsaquo; Privacy Policy</a></li>
+                </ul>
+            </div>
+
+            <!-- Helpful Resources -->
+            <div class="footer-col">
+                <h3>Helpful Resources</h3>
+                <ul>
+                    <li><a href="#">&rsaquo; FAQs</a></li>
+                    <li><a href="#">&rsaquo; User Guides</a></li>
+                    <li><a href="#">&rsaquo; Support Center</a></li>
+                </ul>
+            </div>
+
+            <!-- Stay Connected -->
+            <div class="footer-col">
+                <h3>Stay Connected</h3>
+                <ul>
+                    <li><a href="#">&rsaquo; Future Scope</a></li>
+                    <li><a href="#">&rsaquo; Community Forum</a></li>
+                    <li><a href="#">&rsaquo; Newsletter</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 Copyright – All Rights Reserved | Team AgroSense</p>
+        </div>
     </footer>
 
     <!-- Floating Chatbot Widget -->
