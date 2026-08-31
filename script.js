@@ -137,3 +137,23 @@ try {
     submitBtn.textContent = 'Get Crop Recommendation';
     submitBtn.disabled = false;
 }
+// Simulated AI Response with more keyword checks
+        setTimeout(() => {
+            let botReply = "That's a great farming question! Make sure to monitor your soil health regularly.";
+            const text = userText.toLowerCase();
+            
+            if (text.includes('disease') || text.includes('fungus') || text.includes('pest')) {
+                botReply = "For plant diseases or pests, ensure good airflow between crops, remove infected leaves promptly, and apply organic or copper-based treatments if necessary.";
+            } else if (text.includes('weather') || text.includes('rain') || text.includes('temperature')) {
+                botReply = "Keep an eye on local precipitation forecasts. Avoid heavy irrigation if rainfall is expected within 24 hours.";
+            } else if (text.includes('nitrogen') || text.includes('n-p-k') || text.includes('soil') || text.includes('nutrient')) {
+                botReply = "High nitrogen is great for leafy green growth, but balance it with phosphorus and potassium using the Crop AI tool to prevent nutrient burn!";
+            } else if (text.includes('crop') || text.includes('plant') || text.includes('grow') || text.includes('best')) {
+                botReply = "To find the best crop, head over to our 'Crop AI' page and enter your exact soil N-P-K and weather details!";
+            } else {
+                botReply = `You asked about "${userText}". To get the best results for this, use our specialized tools in the navigation bar for crop recommendations and disease scans!`;
+            }
+
+            messagesArea.innerHTML += `<div style="background: #e8f5e9; padding: 8px 12px; border-radius: 8px; max-width: 80%; align-self: flex-start; color: #2e7d32;">${botReply}</div>`;
+            messagesArea.scrollTop = messagesArea.scrollHeight;
+        }, 1000);
