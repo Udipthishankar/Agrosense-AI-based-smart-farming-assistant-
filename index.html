@@ -39,7 +39,7 @@
         }
         .step-card h4 { color: #1b5e20; margin-bottom: 10px; font-size: 1.2rem; }
 
-        /* Footer Multi-Column Layout Styles */
+        /* Footer Layout Styles */
         .site-footer {
             background: #1a2e1b;
             color: #ffffff;
@@ -66,27 +66,44 @@
             margin: 0;
         }
         .footer-col ul li {
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
         .footer-col ul li a {
             color: #d0d0d0;
             text-decoration: none;
             transition: color 0.2s;
             font-size: 0.95rem;
+            cursor: pointer;
+            display: inline-block;
         }
         .footer-col ul li a:hover {
             color: #a5d6a7;
             padding-left: 5px;
         }
+
+        /* Expandable Pop-up Card Styles */
+        .footer-popup {
+            display: none;
+            background: #ffffff;
+            color: #333333;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #2e7d32;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            margin-top: 8px;
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+        .footer-popup.active {
+            display: block;
+        }
+
         .footer-bottom {
             text-align: center;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             padding-top: 20px;
             font-size: 0.9rem;
             color: #aaa;
-        }
-        .footer-bottom span {
-            color: #ff8a80;
         }
     </style>
 </head>
@@ -174,7 +191,7 @@
         </div>
     </section>
 
-    <!-- Professional Footer matching screenshots -->
+    <!-- Professional Footer with Pop-up Accordion Functionality -->
     <footer class="site-footer">
         <div class="footer-grid">
             <!-- Quick Links -->
@@ -182,7 +199,7 @@
                 <h3>Quick Links</h3>
                 <ul>
                     <li><a href="index.html">&rsaquo; Home</a></li>
-                    <li><a href="index.html#features">&rsaquo; Features</a></li>
+                    <li><a href="index.html">&rsaquo; Features</a></li>
                     <li><a href="about.html">&rsaquo; About</a></li>
                 </ul>
             </div>
@@ -191,9 +208,18 @@
             <div class="footer-col">
                 <h3>Extra Links</h3>
                 <ul>
-                    <li><a href="#" onclick="toggleChat(); return false;">&rsaquo; Ask Questions</a></li>
-                    <li><a href="#">&rsaquo; Terms Of Use</a></li>
-                    <li><a href="#">&rsaquo; Privacy Policy</a></li>
+                    <li>
+                        <a onclick="togglePopup('popup-ask')">&rsaquo; Ask Questions</a>
+                        <div id="popup-ask" class="footer-popup">Have questions about your farm yields or how to use the app? Open our live chat assistant anytime at the bottom right corner!</div>
+                    </li>
+                    <li>
+                        <a onclick="togglePopup('popup-terms')">&rsaquo; Terms Of Use</a>
+                        <div id="popup-terms" class="footer-popup">AgroSense is provided as a decision-support advisory tool for farmers. Recommendations are generated based on input parameters and AI analytics.</div>
+                    </li>
+                    <li>
+                        <a onclick="togglePopup('popup-privacy')">&rsaquo; Privacy Policy</a>
+                        <div id="popup-privacy" class="footer-popup">Your field data, soil reports, and pictures are kept secure and used solely to deliver crop recommendations and plant health diagnostics.</div>
+                    </li>
                 </ul>
             </div>
 
@@ -201,9 +227,18 @@
             <div class="footer-col">
                 <h3>Helpful Resources</h3>
                 <ul>
-                    <li><a href="#">&rsaquo; FAQs</a></li>
-                    <li><a href="#">&rsaquo; User Guides</a></li>
-                    <li><a href="#">&rsaquo; Support Center</a></li>
+                    <li>
+                        <a onclick="togglePopup('popup-faqs')">&rsaquo; FAQs</a>
+                        <div id="popup-faqs" class="footer-popup">Find Answers To Common Questions About How AgroSense Works, Including How To Use The Crop Recommendation Tool, Disease Identification Feature, And More.</div>
+                    </li>
+                    <li>
+                        <a onclick="togglePopup('popup-guides')">&rsaquo; User Guides</a>
+                        <div id="popup-guides" class="footer-popup">Step-by-step manuals on how to test your field soil properly and snap clear leaf pictures for instant AI sickness detection.</div>
+                    </li>
+                    <li>
+                        <a onclick="togglePopup('popup-support')">&rsaquo; Support Center</a>
+                        <div id="popup-support" class="footer-popup">Need technical help or facing trouble running a scan? Contact our support desk or talk directly to our built-in assistant.</div>
+                    </li>
                 </ul>
             </div>
 
@@ -211,9 +246,18 @@
             <div class="footer-col">
                 <h3>Stay Connected</h3>
                 <ul>
-                    <li><a href="#">&rsaquo; Future Scope</a></li>
-                    <li><a href="#">&rsaquo; Community Forum</a></li>
-                    <li><a href="#">&rsaquo; Newsletter</a></li>
+                    <li>
+                        <a onclick="togglePopup('popup-future')">&rsaquo; Future Scope</a>
+                        <div id="popup-future" class="footer-popup">Future updates will include multi-language support for regional farmers, drone imagery integration, and automated irrigation valve controls.</div>
+                    </li>
+                    <li>
+                        <a onclick="togglePopup('popup-community')">&rsaquo; Community Forum</a>
+                        <div id="popup-community" class="footer-popup">Connect with fellow growers in your district to share farming tips, successful harvest strategies, and local weather updates.</div>
+                    </li>
+                    <li>
+                        <a onclick="togglePopup('popup-newsletter')">&rsaquo; Newsletter</a>
+                        <div id="popup-newsletter" class="footer-popup">Subscribe to get weekly seasonal crop advisories, government subsidy notifications, and expert agricultural bulletins straight to your device.</div>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -246,6 +290,21 @@
     </div>
 
     <script>
+        /* Function to handle pop-up description boxes when clicking footer links */
+        function togglePopup(popupId) {
+            // Close all other popups first so only one stays open at a time
+            const allPopups = document.querySelectorAll('.footer-popup');
+            allPopups.forEach(popup => {
+                if (popup.id !== popupId) {
+                    popup.classList.remove('active');
+                }
+            });
+
+            // Toggle the selected popup
+            const targetPopup = document.getElementById(popupId);
+            targetPopup.classList.toggle('active');
+        }
+
         function toggleChat() {
             const chatWindow = document.getElementById('chatWindow');
             const toggleBtn = document.getElementById('chatToggleBtn');
