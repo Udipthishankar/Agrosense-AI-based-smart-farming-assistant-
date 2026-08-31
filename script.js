@@ -164,3 +164,40 @@ fetch('./data/records.json')
       // You can loop through 'data' to show items on your HTML page
   })
   .catch(error => console.error('Error loading records:', error));
+// Example: Listening to a form submission on your frontend
+const cropForm = document.getElementById('crop-form'); // Make sure your form has id="crop-form"
+
+if (cropForm) {
+    cropForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // 1. Get values from the input fields
+        const locationInput = document.getElementById('location-input').value;
+        const cropInput = document.getElementById('crop-input').value;
+
+        const newEntry = {
+            location: locationInput,
+            crop: cropInput,
+            timestamp: new Date().toISOString()
+        };
+
+        console.log("Submitted Data:", newEntry);
+
+        // 2. If you are running your Node.js server (server.js), 
+        // you can send this data to be saved:
+        try {
+            const response = await fetch('http://localhost:5000/api/save-record', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newEntry)
+            });
+            
+            const result = await response.json();
+            alert('Record saved successfully!');
+        } catch (error) {
+            console.error('Error saving record:', error);
+        }
+    });
+}
