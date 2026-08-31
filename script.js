@@ -157,3 +157,10 @@ try {
             messagesArea.innerHTML += `<div style="background: #e8f5e9; padding: 8px 12px; border-radius: 8px; max-width: 80%; align-self: flex-start; color: #2e7d32;">${botReply}</div>`;
             messagesArea.scrollTop = messagesArea.scrollHeight;
         }, 1000);
+fetch('./data/records.json')
+  .then(response => response.json())
+  .then(data => {
+      console.log("Loaded records:", data);
+      // You can loop through 'data' to show items on your HTML page
+  })
+  .catch(error => console.error('Error loading records:', error));
