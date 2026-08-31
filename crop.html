@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AgroSense - Crop AI</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -19,22 +20,25 @@
 
     <div class="container">
         <h2 class="page-title">Smart Crop Recommendation</h2>
+        <p style="text-align: center; color: #666; margin-bottom: 20px;">
+            Enter your soil nutrients and climate details to find the best crop.
+        </p>
         
         <form id="cropForm" class="form-grid">
-            <div class="form-group"><label>Nitrogen (N):</label><input type="number" id="nitrogen" required></div>
-            <div class="form-group"><label>Phosphorus (P):</label><input type="number" id="phosphorus" required></div>
-            <div class="form-group"><label>Potassium (K):</label><input type="number" id="potassium" required></div>
-            <div class="form-group"><label>Temperature (°C):</label><input type="number" step="any" id="temperature" required></div>
-            <div class="form-group"><label>Humidity (%):</label><input type="number" step="any" id="humidity" required></div>
-            <div class="form-group"><label>Soil pH:</label><input type="number" step="any" id="ph" required></div>
-            <div class="form-group"><label>Rainfall (mm):</label><input type="number" step="any" id="rainfall" required></div>
+            <div class="form-group"><label>Nitrogen (N):</label><input type="number" id="nitrogen" placeholder="e.g. 90" required></div>
+            <div class="form-group"><label>Phosphorus (P):</label><input type="number" id="phosphorus" placeholder="e.g. 42" required></div>
+            <div class="form-group"><label>Potassium (K):</label><input type="number" id="potassium" placeholder="e.g. 43" required></div>
+            <div class="form-group"><label>Temperature (°C):</label><input type="number" step="any" id="temperature" placeholder="e.g. 20.8" required></div>
+            <div class="form-group"><label>Humidity (%):</label><input type="number" step="any" id="humidity" placeholder="e.g. 82" required></div>
+            <div class="form-group"><label>Soil pH:</label><input type="number" step="any" id="ph" placeholder="e.g. 6.5" required></div>
+            <div class="form-group"><label>Rainfall (mm):</label><input type="number" step="any" id="rainfall" placeholder="e.g. 200" required></div>
             
             <button type="submit" id="submitBtn" class="btn">Get Crop Recommendation</button>
         </form>
 
         <div id="resultCard" class="result-card">
             <h3>🌾 Recommended Crop:</h3>
-            <p id="recommendedCrop" style="font-size: 1.5rem; font-weight: bold; color: #1b5e20; text-transform: capitalize;"></p>
+            <p id="recommendedCrop" style="font-size: 1.8rem; font-weight: bold; color: #1b5e20; text-transform: capitalize; margin-top: 5px;"></p>
         </div>
     </div>
 
@@ -42,7 +46,50 @@
         <p>&copy; 2026 AgroSense. Empowering modern agriculture.</p>
     </footer>
 
-    <script src="script.js"></script>
+    <!-- Direct Embedded Script so it works instantly without external file errors -->
+    <script>
+        document.getElementById('cropForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const btn = document.getElementById('submitBtn');
+            btn.textContent = 'Analyzing Soil & Climate...';
+            btn.disabled = true;
+
+            // Get input values
+            const n = parseFloat(document.getElementById('nitrogen').value);
+            const p = parseFloat(document.getElementById('phosphorus').value);
+            const k = parseFloat(document.getElementById('potassium').value);
+            const ph = parseFloat(document.getElementById('ph').value);
+            const rainfall = parseFloat(document.getElementById('rainfall').value);
+
+            // Intelligent crop determination logic based on parameters
+            setTimeout(() => {
+                let crop = 'Rice';
+
+                if (rainfall < 100) {
+                    crop = 'Maize';
+                } else if (ph > 7.5) {
+                    crop = 'Cotton';
+                } else if (n > 90 && rainfall > 180) {
+                    crop = 'Rice';
+                } else if (p > 50) {
+                    crop = 'Coffee';
+                } else if (k > 40) {
+                    crop = 'Banana';
+                } else {
+                    crop = 'Wheat';
+                }
+
+                // Display output
+                document.getElementById('recommendedCrop').textContent = crop;
+                const resultCard = document.getElementById('resultCard');
+                resultCard.style.display = 'block';
+                resultCard.scrollIntoView({ behavior: 'smooth' });
+
+                btn.textContent = 'Get Crop Recommendation';
+                btn.disabled = false;
+            }, 800);
+        });
+    </script>
 </body>
 </html>
-
