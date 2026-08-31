@@ -92,14 +92,36 @@
     </footer>
 
     <script>
+        const API_BASE_URL = 'http://localhost:5000/api';
+
         function fetchWeather() {
-            const loc = document.getElementById('locationInput').value || 'Selected Region';
-            // Simulated live update logic
-            document.getElementById('tempVal').textContent = Math.floor(Math.random() * (35 - 22) + 22) + '°C';
-            document.getElementById('humVal').textContent = Math.floor(Math.random() * (80 - 50) + 50) + '%';
-            document.getElementById('rainVal').textContent = Math.floor(Math.random() * 40) + '%';
-            document.getElementById('advisoryText').textContent = `Updated outlook for ${loc}: Conditions are favorable for standard crop maintenance. Monitor soil moisture levels closely.`;
+            const location = document.getElementById('locationInput').value.trim() || 'Bengaluru';
+            
+            fetch(`${API_BASE_URL}/weather/${encodeURIComponent(location)}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('tempVal').textContent = data.temperature + '°C';
+                    document.getElementById('humVal').textContent = data.humidity + '%';
+                    document.getElementById('rainVal').textContent = data.rainfall_chance + '%';
+                    document.getElementById('advisoryText').textContent = data.advisory;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('advisoryText').textContent = 
+                        'Failed to fetch weather. Make sure the backend is running on http://localhost:5000';
+                });
         }
+
+        document.getElementById('locationInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                fetchWeather();
+            }
+        });
+
+        // Load default weather on page load
+        window.addEventListener('load', () => {
+            fetchWeather();
+        });
     </script>
 </body>
 </html>

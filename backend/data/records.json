@@ -1,0 +1,13 @@
+[
+  {
+    "id": 1,
+    "location": "Pune",
+    "crop": "Sugarcane",
+    "timestamp": "2026-08-31T19:09:54.976034",
+    "details": {
+      "area": "3 acres",
+      "soil_type": "black soil",
+      "irrigation": "drip"
+    }
+  }
+]

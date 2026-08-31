@@ -100,27 +100,48 @@
             }
         });
 
-        // Form submission simulation / handling
+        // Backend API call for disease detection
+        const API_BASE_URL = 'http://localhost:5000/api';
+        
         diseaseForm.addEventListener('submit', async (e) => {
             e.preventDefault();
+            
             if (!leafInput.files[0]) {
-                alert('Please select an image first.');
+                alert('Please select an image');
                 return;
             }
-
-            analyzeBtn.textContent = 'Scanning Leaf Pathogens...';
-            analyzeBtn.disabled = true;
-
-            // Simulating API response delay for diagnosis
-            setTimeout(() => {
-                diseaseName.textContent = 'Early Blight (Alternaria solani)';
-                treatmentText.textContent = 'Remove infected lower leaves, avoid overhead watering, and apply a copper-based fungicide every 7-10 days.';
+            
+            const formData = new FormData();
+            formData.append('image', leafInput.files[0]);
+            
+            try {
+                analyzeBtn.textContent = 'Analyzing...';
+                analyzeBtn.disabled = true;
+                
+                const response = await fetch(`${API_BASE_URL}/disease/detect`, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                // Display results
+                diseaseName.textContent = result.disease;
+                treatmentText.innerHTML = 
+                    `<strong>Condition:</strong> ${result.description}<br><br>
+                     <strong>Treatment:</strong> ${result.treatment}<br><br>
+                     <strong>Severity:</strong> ${result.severity}<br>
+                     <strong>Confidence:</strong> ${(result.confidence * 100).toFixed(1)}%`;
+                
                 diseaseResultCard.style.display = 'block';
                 diseaseResultCard.scrollIntoView({ behavior: 'smooth' });
-                
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to analyze image. Make sure backend is running on http://localhost:5000');
+            } finally {
                 analyzeBtn.textContent = 'Analyze Plant Health';
                 analyzeBtn.disabled = false;
-            }, 1500);
+            }
         });
     </script>
 </body>
